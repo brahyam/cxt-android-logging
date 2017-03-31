@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="inline">Uploaded Logs</h1>
+        <a href="/logs/create" class="btn btn-link"><i class="fa fa-plus fa-2x"></i> </a>
+        <table class="table table-hover">
+            <tr>
+                <th>Ticket</th>
+                <th>Flavor</th>
+                <th>Uploader</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+            {{#each data}}
+                <tr>
+                    <td>{{ticket}}</td>
+                    <td>{{flavor}}</td>
+                    <td>{{_uploader.name}}</td>
+                    <td>{{createdAt}}</td>
+                    <td>
+                        <a href="#" class="btn btn-link"><i class="fa fa-search-plus"></i> </a>
+                        <a href="#" class="btn btn-link"><i class="fa fa-times"></i> </a>
+                    </td>
+                </tr>
+            {{/each}}
+        </table>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="col-md-4">
+        <h1>Create Log</h1>
+        <form method="post" action="/logs">
+            <div class="form-group">
+                <label for="flavor">Flavor</label>
+                <input type="text" class="form-control" id="flavor" name="flavor" placeholder="NIH,UAB ...">
+            </div>
+            <div class="form-group">
+                <label for="ticket">Ticket</label>
+                <input type="number" class="form-control" id="ticket" name="ticket" placeholder="123,569 ...">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputFile">Log File</label>
+                <input type="file" id="log">
+                <p class="help-block">Select a log file from your computer. Only .txt and .rtf allowed</p>
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+</div>
