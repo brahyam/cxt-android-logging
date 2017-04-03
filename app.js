@@ -2,11 +2,15 @@ const env = require('dotenv').config()
 const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
-const logger = require('morgan');
+const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const moongose = require('mongoose');
 const winston = require('winston');
+const passport = require('passport');
+const fileUpload = require('express-fileupload');
+const flash = require('connect-flash');
+const session = require('express-session');
 const expressHandlebars = require('express-handlebars');
 const handlebars = expressHandlebars.create({
   layoutsDir: __dirname + '/views/layouts',
@@ -16,13 +20,14 @@ const handlebars = expressHandlebars.create({
 
 var index = require('./routes/index');
 var logs = require('./routes/logs');
+var users = require('./routes/users');
 
 var app = express();
 
 // db setup
 moongose.connect(process.env.MONGODB_URI);
 
-// logger setup
+// winston setup
 winston.level = process.env.LOG_LEVEL || 'error';
 
 // view engine setup
@@ -32,13 +37,22 @@ app.set('view engine', 'handlebars');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+app.use(morgan('dev'));
+app.use(fileUpload());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use('/public', express.static('public'));
 
+// auth
+app.use(session({secret: process.env.PASSPORT_SECRET || 'publicKey'}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
+// routes
 app.use('/', index);
+app.use('/users', users);
 app.use('/logs', logs);
 
 // catch 404 and forward to error handler
