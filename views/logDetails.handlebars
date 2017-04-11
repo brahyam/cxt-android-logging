@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="col-md-12">
+        <h1>{{packageName}} Report</h1>
+        {{#if ticket}}
+            <h2>Ticket {{ticket}}</h2>
+        {{/if}}
+        <h2> App version:{{versionName}}</h2>
+        <h3>{{createdAt}}</h3>
+        <div>
+            <pre>
+                {{logCat}}
+            </pre>
+        </div>
+    </div>
+</div>

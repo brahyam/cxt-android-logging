@@ -40,12 +40,12 @@ app.set('view engine', 'handlebars');
 app.use(morgan('dev'));
 app.use(fileUpload());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({limit: '20mb', extended: true}));
 app.use(cookieParser());
 app.use('/public', express.static('public'));
 
 // auth
-app.use(session({secret: process.env.PASSPORT_SECRET || 'publicKey'}));
+app.use(session({resave: false, saveUninitialized: false, secret: process.env.PASSPORT_SECRET || 'publicKey'}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());

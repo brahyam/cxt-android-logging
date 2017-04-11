@@ -9,9 +9,21 @@ class LogService {
     return new Promise(
       function (resolve, reject) {
         var newLog = new LogModel({
+          androidVersion: log.androidVersion,
+          versionCode: log.versionCode,
+          versionName: log.versionName,
+          deviceId: log.deviceId,
+          installationId: log.installationId,
+          isSilent: log.isSilent,
+          logCat: log.logCat,
+          packageName: log.packageName,
+          phoneModel: log.phoneModel,
+          reportId: log.reportId,
+          stackTrace: log.stackTrace,
+          userIp: log.userIp,
+          ticket: log.ticket,
           data: log.data,
           _uploader: log._uploader,
-          ticket: log.ticket,
           contentType: log.contentType
         });
 

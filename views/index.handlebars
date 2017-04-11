@@ -4,15 +4,17 @@
         <a href="/logs/create" class="btn btn-link"><i class="fa fa-plus fa-2x"></i> </a>
         <table class="table table-hover">
             <tr>
+                <th>Package</th>
+                <th>Version</th>
                 <th>Ticket</th>
-                <th>Uploader</th>
                 <th>Date</th>
                 <th>Actions</th>
             </tr>
             {{#each data}}
                 <tr>
+                    <td>{{packageName}}</td>
+                    <td>{{versionName}}</td>
                     <td>{{ticket}}</td>
-                    <td>{{_uploader.name}}</td>
                     <td>{{createdAt}}</td>
                     <td>
                         <a href="/logs/{{id}}" class="btn btn-link"><i class="fa fa-search-plus"></i> </a>
