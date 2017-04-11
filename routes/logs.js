@@ -1,8 +1,5 @@
 var express = require('express');
 var router = express.Router();
-const formidable = require('formidable');
-const fs = require('fs');
-const path = require('path');
 const winston = require('winston');
 const LogService = require('../services/log-service');
 

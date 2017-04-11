@@ -8,7 +8,7 @@ class LogService {
   create(log) {
     return new Promise(
       function (resolve, reject) {
-        var newLog = LogModel({
+        var newLog = new LogModel({
           data: log.data,
           _uploader: log._uploader,
           ticket: log.ticket,
