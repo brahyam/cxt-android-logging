@@ -48,7 +48,7 @@ class LogService {
           delete query.id;
         }
 
-        LogModel.find(query, function (err, data) {
+        LogModel.find(query, null, {sort: {createdAt: -1}}, function (err, data) {
           if (err) {
             reject(err);
           }

@@ -5,7 +5,7 @@
             <h2>Ticket {{ticket}}</h2>
         {{/if}}
         <h2> App version:{{versionName}}</h2>
-        <h3>{{createdAt}}</h3>
+        <h3 class="date">{{createdAt}}</h3>
         <div>
             <pre>
                 {{logCat}}
@@ -13,3 +13,13 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(function () {
+        // Get Date and display as user locale
+        $('.date').each(function () {
+            var date = new Date($(this).html());
+            $(this).html(date.toLocaleString());
+        });
+    });
+</script>

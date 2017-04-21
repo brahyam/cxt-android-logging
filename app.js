@@ -21,6 +21,7 @@ const handlebars = expressHandlebars.create({
 var index = require('./routes/index');
 var logs = require('./routes/logs');
 var users = require('./routes/users');
+var logsApi = require('./routes/logs-api');
 
 var app = express();
 
@@ -54,6 +55,7 @@ app.use(flash());
 app.use('/', index);
 app.use('/users', users);
 app.use('/logs', logs);
+app.use('/api/logs', logsApi);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

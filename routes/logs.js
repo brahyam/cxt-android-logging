@@ -51,6 +51,9 @@ router.post('/', function (req, res, next) {
     });
 });
 
+/**
+ * Show log details
+ */
 router.get('/:id', function (req, res, next) {
   LogService.find({id: req.params.id})
     .then(data => {
@@ -67,6 +70,9 @@ router.get('/:id', function (req, res, next) {
     });
 });
 
+/**
+ * Delete Log
+ */
 router.get('/delete/:id', function (req, res, next) {
   LogService.delete(req.params.id)
     .then(data => {
@@ -82,6 +88,35 @@ router.get('/delete/:id', function (req, res, next) {
     });
 });
 
+/**
+ * Download log
+ */
+router.get('/download/:id', function (req, res, next) {
+  LogService.find({id: req.params.id})
+    .then(data => {
+      var log = data[0];
+      var fileName;
+      if (log.ticket) {
+        fileName = log.ticket;
+      }
+      else {
+        fileName = log.packageName + log.createdAt.getTime();
+      }
+      res.status(200);
+      res.set({
+        'Content-Type': 'application/force-download',
+        'Content-disposition': 'attachment; filename=logCat-' + fileName + '.txt'
+      });
+      res.end(log.logCat);
+    })
+    .catch(err => {
+      res.render('error', {message: err})
+    });
+});
+
+/**
+ * Create new log (API CALL)
+ */
 router.post('/api', function (req, res, next) {
   // Process ticket name
 
