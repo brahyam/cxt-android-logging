@@ -1,14 +1,14 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="inline">Uploaded Logs</h1>
-        <a href="/logs/create" class="btn btn-link"><i class="fa fa-plus fa-2x"></i> </a>
+        <!--<a href="/logs/create" class="btn btn-link"><i class="fa fa-plus fa-2x"></i> </a>-->
         <table class="table table-hover">
             <tr>
                 <th>Package</th>
                 <th>Version</th>
                 <th>Ticket</th>
                 <th>Date</th>
-                <th>Actions</th>
+                <th class="text-center">Actions</th>
             </tr>
             {{#each data}}
                 <tr>
@@ -16,7 +16,7 @@
                     <td>{{versionName}}</td>
                     <td>{{ticket}}</td>
                     <td class="date">{{createdAt}}</td>
-                    <td>
+                    <td class="text-center">
                         <a href="/logs/{{id}}" class="btn btn-link"><i class="fa fa-search-plus"></i></a>
                         <a href="/logs/download/{{id}}" class="btn btn-link"><i class="fa fa-download"></i></a>
                         <a href="/logs/delete/{{id}}" class="btn btn-link"

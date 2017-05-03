@@ -11,6 +11,7 @@ const passport = require('passport');
 const fileUpload = require('express-fileupload');
 const flash = require('connect-flash');
 const session = require('express-session');
+const cors = require('cors');
 const expressHandlebars = require('express-handlebars');
 const handlebars = expressHandlebars.create({
   layoutsDir: __dirname + '/views/layouts',
@@ -43,6 +44,7 @@ app.use(fileUpload());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({limit: '20mb', extended: true}));
 app.use(cookieParser());
+app.use(cors());
 app.use('/public', express.static('public'));
 
 // auth
