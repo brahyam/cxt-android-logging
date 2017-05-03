@@ -6,16 +6,18 @@
         {{/if}}
         <h2> App version:{{versionName}}</h2>
         <h3 class="date">{{createdAt}}</h3>
-        <h4><strong>Device Id:</strong>{{deviceId}}</h4>
-        <h4><strong>Phone Model:</strong>{{phoneModel}}</h4>
-        <h4><strong>User IP:</strong>{{userIp}}</h4>
+        <h4><strong>Device Id: </strong>{{deviceId}}</h4>
+        <h4><strong>Phone Model: </strong>{{phoneModel}}</h4>
+        <h4><strong>User IP: </strong>{{userIp}}</h4>
         {{#if stackTrace}}
+            <h3><strong>Stack Trace</strong></h3>
             <div class="well well-sm">
                 {{stackTrace}}
             </div>
         {{/if}}
         {{#if logCat}}
             <div>
+                <h3><strong>LogCat</strong></h3>
                 <pre>
                     {{logCat}}
                 </pre>
