@@ -119,6 +119,9 @@ router.get('/download/:id', function (req, res, next) {
  */
 router.post('/api', function (req, res, next) {
   // Process ticket name
+  winston.info('POST logs/api');
+
+  winston.silly('Request body:', req.body);
 
   var log = {
     androidVersion: req.body.ANDROID_VERSION,
@@ -141,6 +144,8 @@ router.post('/api', function (req, res, next) {
     log.date = req.files.logFile.data;
     log.contentType = req.files.logFile.mimetype;
   }
+
+  winston.silly('Final Log object to save:', log);
 
   LogService.create(log)
     .then(data => {
