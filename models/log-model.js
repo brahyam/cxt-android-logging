@@ -18,6 +18,7 @@ const logSchema = new Schema({
   logCat: {type: String},
   packageName: {type: String},
   phoneModel: {type: String},
+  phoneBrand: {type: String},
   reportId: {type: String},
   stackTrace: {type: String},
   userIp: {type: String},

@@ -18,6 +18,7 @@ class LogService {
           logCat: log.logCat,
           packageName: log.packageName,
           phoneModel: log.phoneModel,
+          phoneBrand: log.phoneBrand,
           reportId: log.reportId,
           stackTrace: log.stackTrace,
           userIp: log.userIp,

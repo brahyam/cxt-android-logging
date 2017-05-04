@@ -133,6 +133,7 @@ router.post('/api', function (req, res, next) {
     logCat: req.body.LOGCAT,
     packageName: getFlavorNameFromPackage(req.body.PACKAGE_NAME),
     phoneModel: req.body.PHONE_MODEL,
+    phoneBrand: req.body.BRAND,
     reportId: req.body.REPORT_ID,
     stackTrace: req.body.STACK_TRACE,
     userIp: req.body.USER_IP,
