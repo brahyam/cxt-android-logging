@@ -7,7 +7,19 @@ const LogService = require('../services/log-service');
  * Get all logs
  */
 router.get('/', function (req, res, next) {
-  LogService.find()
+  // Defaults
+  var page = 0;
+  var perPage = 10;
+
+  if (req.query.page && req.query.page > 0) {
+    page = req.query.page;
+  }
+
+  if (req.query.perPage && req.query.perPage > 0) {
+    perPage = req.query.perPage;
+  }
+
+  LogService.find({pagination: true, perPage: perPage, page: page})
     .then(data => {
       res.json(data);
     })
@@ -69,7 +81,7 @@ router.delete('/:id', function (req, res, next) {
  * Get specific Log
  */
 router.get('/:id', function (req, res, next) {
-  LogService.find({id: req.params.id})
+  LogService.find({query: {id: req.params.id}})
     .then(data => {
       res.json(data);
     })

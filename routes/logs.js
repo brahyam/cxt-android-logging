@@ -5,11 +5,19 @@ const LogService = require('../services/log-service');
 
 /* GET log listing. */
 router.get('/', function (req, res, next) {
+  // Defaults
   var page = 0;
+  var perPage = 15;
+
   if (req.query.page && req.query.page > 0) {
     page = req.query.page;
   }
-  LogService.find({pagination: true, perPage: 5, page: page})
+
+  if (req.query.perPage && req.query.perPage > 0) {
+    perPage = req.query.perPage;
+  }
+
+  LogService.find({pagination: true, perPage: perPage, page: page})
     .then(response => {
       res.render('index', response);
     })

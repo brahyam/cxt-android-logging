@@ -59,14 +59,13 @@ class LogService {
 
           // Calculate pagination
           if (options.pagination) {
-            limit = options.perPage;
+            limit = parseInt(options.perPage);
             if (options.page) {
-              page = options.page;
-              skip = options.page * limit;
+              page = parseInt(options.page);
+              skip = page * limit;
             }
           }
         }
-
 
         LogModel.find(query, null, {sort: {createdAt: -1}, skip: skip, limit: limit}, function (err, data) {
           if (err) {
