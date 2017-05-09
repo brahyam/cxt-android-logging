@@ -65,5 +65,18 @@ router.delete('/:id', function (req, res, next) {
     });
 });
 
+/**
+ * Get specific Log
+ */
+router.get('/:id', function (req, res, next) {
+  LogService.find({id: req.params.id})
+    .then(data => {
+      res.json(data);
+    })
+    .catch(err => {
+      res.send(err);
+    });
+});
+
 
 module.exports = router;
