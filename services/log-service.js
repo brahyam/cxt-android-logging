@@ -40,21 +40,40 @@ class LogService {
     )
   }
 
-  find(query) {
+  find(options) {
     return new Promise(
       function (resolve, reject) {
-        // If searching objects by ID, need to replace string id with objectId from Mongo
-        if (query && query.id) {
-          query._id = new mongoDb.ObjectID(query.id);
-          delete query.id;
+        // Defaults
+        var page = 0;
+        var skip = 0;
+        var limit = 100;
+        var query = null;
+
+        if (options) {
+          // If searching objects by ID, need to replace string id with objectId from Mongo
+          if (options.query && options.query.id) {
+            options.query._id = new mongoDb.ObjectID(options.query.id);
+            delete options.query.id;
+          }
+          query = options.query;
+
+          // Calculate pagination
+          if (options.pagination) {
+            limit = options.perPage;
+            if (options.page) {
+              page = options.page;
+              skip = options.page * limit;
+            }
+          }
         }
 
-        LogModel.find(query, null, {sort: {createdAt: -1}}, function (err, data) {
+
+        LogModel.find(query, null, {sort: {createdAt: -1}, skip: skip, limit: limit}, function (err, data) {
           if (err) {
             reject(err);
           }
           else {
-            resolve(data);
+            resolve({page: page, count: limit, data: data});
           }
         })
       }

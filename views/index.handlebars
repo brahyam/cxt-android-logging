@@ -25,6 +25,12 @@
                 </tr>
             {{/each}}
         </table>
+        <nav aria-label="...">
+            <ul class="pager">
+                <li><a href="/logs?page={{dec page}}">Previous</a></li>
+                <li><a href="/logs?page={{inc page}}">Next</a></li>
+            </ul>
+        </nav>
     </div>
 </div>
 

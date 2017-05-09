@@ -16,7 +16,15 @@ const expressHandlebars = require('express-handlebars');
 const handlebars = expressHandlebars.create({
   layoutsDir: __dirname + '/views/layouts',
   partialsDir: __dirname + '/views/partials',
-  defaultLayout: 'main.handlebars'
+  defaultLayout: 'main.handlebars',
+  helpers: {
+    inc: function (number) {
+      return parseInt(number) + 1;
+    },
+    dec: function (number) {
+      return parseInt(number) - 1;
+    }
+  }
 });
 
 var index = require('./routes/index');

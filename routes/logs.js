@@ -5,9 +5,13 @@ const LogService = require('../services/log-service');
 
 /* GET log listing. */
 router.get('/', function (req, res, next) {
-  LogService.find()
-    .then(data => {
-      res.render('index', {data: data});
+  var page = 0;
+  if (req.query.page && req.query.page > 0) {
+    page = req.query.page;
+  }
+  LogService.find({pagination: true, perPage: 5, page: page})
+    .then(response => {
+      res.render('index', response);
     })
     .catch(err => {
       res.render(err);
@@ -55,14 +59,14 @@ router.post('/', function (req, res, next) {
  * Show log details
  */
 router.get('/:id', function (req, res, next) {
-  LogService.find({id: req.params.id})
-    .then(data => {
-      if (data && data.length > 0) {
-        var log = data[0];
+  LogService.find({query: {id: req.params.id}})
+    .then(response => {
+      if (response.data.length > 0) {
+        var log = response.data[0];
         res.render('logDetails', log);
       }
       else {
-        res.render('error', {message: 'log not found'});
+        res.render('error', {message: 'Log not found'});
       }
     })
     .catch(err => {
@@ -92,9 +96,9 @@ router.get('/delete/:id', function (req, res, next) {
  * Download log
  */
 router.get('/download/:id', function (req, res, next) {
-  LogService.find({id: req.params.id})
-    .then(data => {
-      var log = data[0];
+  LogService.find({query: {id: req.params.id}})
+    .then(response => {
+      var log = response.data[0];
       var fileName;
       if (log.ticket) {
         fileName = log.ticket;
