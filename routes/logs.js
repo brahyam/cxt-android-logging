@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const winston = require('winston');
+const utils = require('./utils');
 const LogService = require('../services/log-service');
 
 /* GET log listing. */
@@ -126,75 +127,5 @@ router.get('/download/:id', function (req, res, next) {
     });
 });
 
-/**
- * Create new log (API CALL)
- */
-router.post('/api', function (req, res, next) {
-  // Process ticket name
-  winston.info('POST logs/api');
-
-  winston.silly('Request body:', req.body);
-
-  var log = {
-    androidVersion: req.body.ANDROID_VERSION,
-    versionCode: req.body.APP_VERSION_CODE,
-    versionName: req.body.APP_VERSION_NAME,
-    deviceId: req.body.DEVICE_ID,
-    installationId: req.body.INSTALLATION_ID,
-    isSilent: req.body.IS_SILENT,
-    logCat: req.body.LOGCAT,
-    packageName: getFlavorNameFromPackage(req.body.PACKAGE_NAME),
-    phoneModel: req.body.PHONE_MODEL,
-    phoneBrand: req.body.BRAND,
-    reportId: req.body.REPORT_ID,
-    stackTrace: req.body.STACK_TRACE,
-    userIp: req.body.USER_IP,
-    ticket: getTicketNameFromCustomData(req.body.CUSTOM_DATA)
-  };
-
-  // Add files if present
-  if (req.files) {
-    log.date = req.files.logFile.data;
-    log.contentType = req.files.logFile.mimetype;
-  }
-
-  winston.silly('Final Log object to save:', log);
-
-  LogService.create(log)
-    .then(data => {
-      res.status(200).send({status: 'OK', message: 'Log Created'});
-    })
-    .catch(err => {
-      res.status(300).send({status: 'FAIL', message: err.message});
-    });
-});
 
 module.exports = router;
-
-/**
- * Gets an app package name and returns the last
- * module name capitalized
- * @param packageName String containing a package name i.e. com.connexient.medinav.uab
- * @return String containing last segment of package name capitalized i.e. Uab
- */
-function getFlavorNameFromPackage(packageName) {
-  var splittedName = packageName.split('.');
-  var flavorName = splittedName[splittedName.length - 1];
-  return flavorName.substring(0, 1).toUpperCase() + flavorName.substring(1);
-}
-
-/**
- * Gets all custom data values and returns only the ticket name
- * @param customData String containing all report custom data (value pairs)
- * @return String containing ticket name
- */
-function getTicketNameFromCustomData(customData) {
-  const TICKET_NAME_KEY = 'TICKET_NAME';
-  var keyValuePairs = customData.split(',');
-  for (var i = 0; i < keyValuePairs.length; i++) {
-    var splitedValue = keyValuePairs[i].split('=');
-    if (splitedValue[0].trim().indexOf(TICKET_NAME_KEY) !== -1) {
-      return splitedValue[1].trim();
-    }
-  }
-}

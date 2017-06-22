@@ -1,7 +1,11 @@
 var express = require('express');
 var router = express.Router();
 const winston = require('winston');
+const utils = require('./utils');
 const LogService = require('../services/log-service');
+
+const ACRA_TICKET_NAME_FIELD = 'TICKET_NAME';
+const ACRA_CLIENT_NAME_FIELD = 'CLIENT_NAME';
 
 /**
  * Get all logs
@@ -33,6 +37,11 @@ router.get('/', function (req, res, next) {
  */
 router.post('/', function (req, res, next) {
 
+  // Process ticket name
+  winston.info('POST logs/api');
+
+  winston.silly('Request body:', req.body);
+
   var log = {
     androidVersion: req.body.ANDROID_VERSION,
     versionCode: req.body.APP_VERSION_CODE,
@@ -41,13 +50,20 @@ router.post('/', function (req, res, next) {
     installationId: req.body.INSTALLATION_ID,
     isSilent: req.body.IS_SILENT,
     logCat: req.body.LOGCAT,
-    packageName: req.body.PACKAGE_NAME,
+    packageName: utils.getFlavorNameFromPackage(req.body.PACKAGE_NAME),
     phoneModel: req.body.PHONE_MODEL,
+    phoneBrand: req.body.BRAND,
     reportId: req.body.REPORT_ID,
     stackTrace: req.body.STACK_TRACE,
     userIp: req.body.USER_IP,
-    ticket: req.body.ticket
+    ticket: utils.getCustomData(ACRA_TICKET_NAME_FIELD, req.body.CUSTOM_DATA)
   };
+
+  // Add client name if present.
+  var clientName = utils.getCustomData(ACRA_CLIENT_NAME_FIELD, req.body.CUSTOM_DATA);
+  if (clientName) {
+    log.packageName = log.packageName + '-' + clientName;
+  }
 
   // Add files if present
   if (req.files) {
@@ -55,12 +71,14 @@ router.post('/', function (req, res, next) {
     log.contentType = req.files.logFile.mimetype;
   }
 
+  winston.silly('Final Log object to save:', log);
+
   LogService.create(log)
     .then(data => {
-      res.json(data);
+      res.status(200).send({status: 'OK', message: 'Log Created'});
     })
     .catch(err => {
-      res.send(err);
+      res.status(300).send({status: 'ERROR', message: err.message});
     });
 });
 
@@ -89,6 +107,5 @@ router.get('/:id', function (req, res, next) {
       res.send(err);
     });
 });
-
 
 module.exports = router;
