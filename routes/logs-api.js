@@ -6,6 +6,7 @@ const LogService = require('../services/log-service');
 
 const ACRA_TICKET_NAME_FIELD = 'TICKET_NAME';
 const ACRA_CLIENT_NAME_FIELD = 'CLIENT_NAME';
+const RESULTS_SHOULD_HAVE_LOG_CAT_BY_DEFAULT = true;
 
 /**
  * Get all logs
@@ -13,7 +14,8 @@ const ACRA_CLIENT_NAME_FIELD = 'CLIENT_NAME';
 router.get('/', function (req, res, next) {
   // Defaults
   var page = 0;
-  var perPage = 10;
+  var perPage = 100;
+  var slim = !RESULTS_SHOULD_HAVE_LOG_CAT_BY_DEFAULT;
 
   if (req.query.page && req.query.page > 0) {
     page = req.query.page;
@@ -23,7 +25,11 @@ router.get('/', function (req, res, next) {
     perPage = req.query.perPage;
   }
 
-  LogService.find({pagination: true, perPage: perPage, page: page})
+  if (req.query.slim){
+    slim = (req.query.slim === 'true');
+  }
+
+  LogService.find({pagination: true, perPage: perPage, page: page, slim:slim})
     .then(data => {
       res.json(data);
     })
@@ -99,7 +105,11 @@ router.delete('/:id', function (req, res, next) {
  * Get specific Log
  */
 router.get('/:id', function (req, res, next) {
-  LogService.find({query: {id: req.params.id}})
+  var slim = !RESULTS_SHOULD_HAVE_LOG_CAT_BY_DEFAULT;
+  if (req.query.slim){
+      slim = (req.query.slim === 'true');
+  }
+  LogService.find({query: {id: req.params.id}, slim:slim})
     .then(data => {
       res.json(data);
     })

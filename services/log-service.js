@@ -65,9 +65,15 @@ class LogService {
               skip = page * limit;
             }
           }
+
+          // Parse slim option
+          var fields = null;
+          if(options.slim){
+              fields = {logCat: 0};
+          }
         }
 
-        LogModel.find(query, null, {sort: {createdAt: -1}, skip: skip, limit: limit}, function (err, data) {
+        LogModel.find(query, fields, {sort: {createdAt: -1}, skip: skip, limit: limit}, function (err, data) {
           if (err) {
             reject(err);
           }
