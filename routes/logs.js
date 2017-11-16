@@ -8,7 +8,7 @@ const LogService = require('../services/log-service');
 router.get('/', function (req, res, next) {
   // Defaults
   var page = 0;
-  var perPage = 15;
+  var perPage = 100;
 
   if (req.query.page && req.query.page > 0) {
     page = req.query.page;
@@ -18,7 +18,7 @@ router.get('/', function (req, res, next) {
     perPage = req.query.perPage;
   }
 
-  LogService.find({pagination: true, perPage: perPage, page: page})
+  LogService.find({pagination: true, perPage: perPage, page: page, slim:true})
     .then(response => {
       res.render('index', response);
     })

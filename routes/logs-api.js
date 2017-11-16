@@ -18,10 +18,12 @@ router.get('/', function (req, res, next) {
   var slim = !RESULTS_SHOULD_HAVE_LOG_CAT_BY_DEFAULT;
 
   if (req.query.page && req.query.page > 0) {
+    winston.silly('query page='+req.query.page);
     page = req.query.page;
   }
 
   if (req.query.perPage && req.query.perPage > 0) {
+    winston.silly('query perPage='+req.query.perPage    );
     perPage = req.query.perPage;
   }
 

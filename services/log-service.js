@@ -59,10 +59,14 @@ class LogService {
 
           // Calculate pagination
           if (options.pagination) {
+            winston.silly('options perPage='+options.perPage);
             limit = parseInt(options.perPage);
+            winston.silly('limit='+limit);
             if (options.page) {
               page = parseInt(options.page);
               skip = page * limit;
+              winston.silly('page='+page);
+              winston.silly('skip='+skip);
             }
           }
 
@@ -73,7 +77,7 @@ class LogService {
           }
         }
 
-        LogModel.find(query, fields, {sort: {createdAt: -1}, skip: skip, limit: limit}, function (err, data) {
+        LogModel.find(query, fields, {sort: {_id: -1}, skip: skip, limit: limit}, function (err, data) {
           if (err) {
             reject(err);
           }
