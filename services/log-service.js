@@ -23,6 +23,7 @@ class LogService {
           stackTrace: log.stackTrace,
           userIp: log.userIp,
           ticket: log.ticket,
+          screenshotUrl: log.screenshotUrl,
           data: log.data,
           _uploader: log._uploader,
           contentType: log.contentType

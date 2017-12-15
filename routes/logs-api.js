@@ -6,6 +6,7 @@ const LogService = require('../services/log-service');
 
 const ACRA_TICKET_NAME_FIELD = 'TICKET_NAME';
 const ACRA_CLIENT_NAME_FIELD = 'CLIENT_NAME';
+const ACRA_SCREENSHOT_URL_FIELD = 'SCREENSHOT_URL';
 const RESULTS_SHOULD_HAVE_LOG_CAT_BY_DEFAULT = true;
 
 /**
@@ -64,7 +65,8 @@ router.post('/', function (req, res, next) {
     reportId: req.body.REPORT_ID,
     stackTrace: req.body.STACK_TRACE,
     userIp: req.body.USER_IP,
-    ticket: utils.getCustomData(ACRA_TICKET_NAME_FIELD, req.body.CUSTOM_DATA)
+    ticket: utils.getCustomData(ACRA_TICKET_NAME_FIELD, req.body.CUSTOM_DATA),
+    screenshotUrl: utils.getCustomData(ACRA_SCREENSHOT_URL_FIELD, req.body.CUSTOM_DATA)
   };
 
   // Add client name if present.

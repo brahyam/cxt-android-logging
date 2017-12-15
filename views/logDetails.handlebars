@@ -11,6 +11,9 @@
         <h4><strong>Phone Model: </strong>{{phoneModel}}</h4>
         <h4><strong>Android Version: </strong>{{androidVersion}}</h4>
         <h4><strong>User IP: </strong>{{userIp}}</h4>
+        {{#if screenshotUrl}}
+            <img src="{{screenshotUrl}}" class="img-responsive"/>
+        {{/if}}
         {{#if stackTrace}}
             <h3><strong>Stack Trace</strong></h3>
             <div class="well well-sm">

@@ -7,6 +7,7 @@ const logSchema = new Schema({
   data: {type: Buffer},
   contentType: {type: String},
   ticket: {type: String},
+  screenshotUrl: {type: String},
   _uploader: {type: Schema.Types.ObjectId, ref: 'user'},
   // ACRA Fields
   androidVersion: {type: String},
