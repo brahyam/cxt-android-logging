@@ -1,6 +1,8 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="inline">Uploaded Logs</h1>
+        <a class="btn btn-link" href="/logs/deleteold" onclick="return confirm('Are you sure you want to delete?');">Delete
+            old logs</a>
         <!--<a href="/logs/create" class="btn btn-link"><i class="fa fa-plus fa-2x"></i> </a>-->
         <table class="table table-hover">
             <tr>
@@ -14,7 +16,7 @@
             {{#each data}}
                 <tr>
                     <td>{{packageName}}</td>
-                    <td>{{versionName}}</td>
+                    <td>{{versionName}} ({{versionCode}})</td>
                     <td>{{phoneBrand}}</td>
                     <td>{{phoneModel}}</td>
                     <td class="date">{{createdAt}}</td>

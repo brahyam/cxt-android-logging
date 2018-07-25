@@ -60,21 +60,21 @@ class LogService {
 
           // Calculate pagination
           if (options.pagination) {
-            winston.silly('options perPage='+options.perPage);
+            winston.silly('options perPage=' + options.perPage);
             limit = parseInt(options.perPage);
-            winston.silly('limit='+limit);
+            winston.silly('limit=' + limit);
             if (options.page) {
               page = parseInt(options.page);
               skip = page * limit;
-              winston.silly('page='+page);
-              winston.silly('skip='+skip);
+              winston.silly('page=' + page);
+              winston.silly('skip=' + skip);
             }
           }
 
           // Parse slim option
           var fields = null;
-          if(options.slim){
-              fields = {logCat: 0};
+          if (options.slim) {
+            fields = {logCat: 0};
           }
         }
 
@@ -101,6 +101,32 @@ class LogService {
             resolve(log);
           }
         })
+      }
+    )
+  }
+
+  deleteOld() {
+    return new Promise(
+      function (resolve, reject) {
+        // Calculate 1 month ago date
+        const removalDate = new Date();
+        removalDate.setMonth(removalDate.getMonth() - 1);
+        LogModel.remove(
+          {
+            'createdAt':
+              {
+                '$lte': removalDate
+              }
+          }, function (err) {
+            if (err) {
+              winston.debug('Removal successful');
+              reject();
+            }
+            else {
+              winston.debug('Removal returned ' + err);
+              resolve();
+            }
+          })
       }
     )
   }

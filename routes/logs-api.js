@@ -86,11 +86,22 @@ router.post('/', function (req, res, next) {
   LogService.create(log)
     .then(data => {
       res.status(200).send({status: 'OK', message: 'Log Created'});
+      if (shouldCleanLogs()) {
+        LogService.deleteOld();
+      }
     })
     .catch(err => {
       res.status(300).send({status: 'ERROR', message: err.message});
     });
 });
+
+/**
+ * Apply rules to see if clean logs should be called.
+ */
+function shouldCleanLogs() {
+  const currentDate = new Date();
+  return currentDate.getDate() % 5 == 0 && currentDate.getHours() % 3 == 0;
+}
 
 /**
  * Deletes Log

@@ -65,6 +65,23 @@ router.post('/', function (req, res, next) {
 });
 
 /**
+ * Delete Old Logs
+ */
+router.get('/deleteold', function (req, res, next) {
+  LogService.deleteOld()
+    .then(() => {
+      res.redirect('/');
+    })
+    .catch(err => {
+      res.render('error', {message: err})
+    });
+});
+
+/**
+ * FROM HERE ON JUST ROUTES WITH ID AT THE END.
+ */
+
+/**
  * Show log details
  */
 router.get('/:id', function (req, res, next) {

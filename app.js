@@ -28,7 +28,7 @@ const handlebars = expressHandlebars.create({
 });
 
 var index = require('./routes/index');
-var logs = require('./routes/logs');
+var logs = require('./routes/logs-ui');
 var users = require('./routes/users');
 var logsApi = require('./routes/logs-api');
 
