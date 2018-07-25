@@ -100,8 +100,21 @@ router.post('/', function (req, res, next) {
  */
 function shouldCleanLogs() {
   const currentDate = new Date();
-  return currentDate.getDate() % 5 == 0 && currentDate.getHours() % 3 == 0;
+  return currentDate.getDate() % 5 === 0 && currentDate.getHours() % 3 === 0;
 }
+
+/**
+ * Deletes Old Logs
+ */
+router.delete('/deleteold', function (req, res, next) {
+  LogService.deleteOld()
+    .then(() => {
+      res.status(200).send({status: 'OK', message: 'Logs erased'});
+    })
+    .catch(err => {
+      res.send(err);
+    });
+});
 
 /**
  * Deletes Log
